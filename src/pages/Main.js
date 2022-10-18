@@ -1,13 +1,16 @@
+import React, { useEffect, useState } from "react";
+
 import Button from "../components/header.style";
-import React from "react";
 import styled from "styled-components";
 
 const Bar = styled.div`
 	display: flex;
 	align-content: center;
 	width: 3%;
+
 	height: ${(props) => props.height};
-	background-color: ${(props) => (props.active ? "#B50002" : "black")};
+	background-color: ${(props) =>
+		props.active ? "#B50002" : props.sortedColor};
 	${(props) => props.style}
 	margin-right: 2px;
 `;
@@ -45,26 +48,44 @@ const Step = styled.div`
 `;
 
 const Main = (props) => {
-	const { data, currentIdx, nextIdx } = props;
+	const [idx, setIdx] = useState();
+	const { data, currentIdx, nextIdx, value, lastSortedIdx } = props;
+
+	const [sortedColor, setSortedColor] = useState("");
+	useEffect(() => {
+		if (currentIdx === null) {
+			setSortedColor("#006400");
+		} else {
+			setSortedColor("black");
+		}
+	}, [currentIdx]);
 
 	const width = 70 / data.length;
+
+	const BarGenerator = data.map((size, i) => {
+		return (
+			<Bar
+				height={`${size}px`}
+				width={`${width}px`}
+				key={i}
+				active={currentIdx === i}
+				sortedColor={sortedColor}
+				style={
+					i === lastSortedIdx
+						? { backgroundColor: "green" }
+						: i === nextIdx
+						? { backgroundColor: "blue" }
+						: null
+				}
+			>
+				<span style={{ color: "white" }}>{size}</span>
+			</Bar>
+		);
+	});
+
 	return (
 		<Div>
-			<Container>
-				{data.map((size, i) => (
-					<>
-						<Bar
-							height={`${size}px`}
-							width={`${width}px`}
-							key={i}
-							active={currentIdx === i}
-							style={nextIdx === i ? { backgroundColor: "green" } : null}
-						>
-							<span style={{ color: "white" }}>{size}</span>
-						</Bar>
-					</>
-				))}
-			</Container>
+			<Container>{BarGenerator}</Container>
 			<Step>
 				<p style={{ color: "white" }}>Developed By Vinay Reddy</p>
 			</Step>
