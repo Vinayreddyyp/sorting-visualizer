@@ -59,19 +59,25 @@ const App = () => {
 
 	const generateSelectionSort = async () => {
 		for (let i = 0; i < arr.length; i++) {
-			setCurrentIdx(i);
 			let lowest = i;
 			for (let j = i + 1; j < arr.length; j++) {
-				setNextIdx(j + 1);
+				setCurrentIdx(lowest);
+				setNextIdx(j);
 				if (arr[j] < arr[lowest]) {
 					lowest = j;
 				}
+				await sleep(300);
 			}
+			console.log("indexed in the selection sort", i);
+			setLastSortedIdx(i);
 			let temp = arr[i];
 			arr[i] = arr[lowest];
 			arr[lowest] = temp;
+
+			//console.log("indexed in the selection sort", lowest);
+
 			setArr([...arr]);
-			await sleep(500);
+			await sleep(200);
 		}
 		setCurrentIdx(null);
 		setNextIdx(null);
