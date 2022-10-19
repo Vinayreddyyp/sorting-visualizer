@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import Header from "../components/Header";
 import Main from "./Main";
+import { bubbleSort } from "../algorithms/BubbleSort";
 import { sleep } from "../helpers";
 
 const App = () => {
@@ -12,10 +13,10 @@ const App = () => {
 	const [currentIdx, setCurrentIdx] = useState();
 	const [nextIdx, setNextIdx] = useState();
 	const [lastSortedIdx, setLastSortedIdx] = useState();
+	const [algoName, setAlgoName] = useState("");
 
 	useEffect(() => {
 		updateList();
-		console.log("updaated list in the useEffectxxxx++++++++++++++++++++");
 		setCurrentIdx();
 	}, [value]);
 
@@ -33,8 +34,27 @@ const App = () => {
 		setValue(value);
 	};
 
-	const generateBubbleSort = async () => {
-		for (let i = 0; i < arr.length; i++) {
+	const switchSorting = (type) => {
+		console.log("type in the switchSorting", type);
+		switch (type) {
+			case "BubbleSort":
+				return bubbleSort(
+					setCurrentIdx,
+					setArr,
+					setAlgoName,
+					setNextIdx,
+					setLastSortedIdx,
+					arr
+				);
+			default:
+				return null;
+		}
+	};
+
+	const generateBubbleSort = () => {
+		console.log("bubbleSort is geenrating the sort");
+		switchSorting("BubbleSort");
+		/* for (let i = 0; i < arr.length; i++) {
 			for (let j = 0; j < arr.length; j++) {
 				setCurrentIdx(j);
 
@@ -48,13 +68,14 @@ const App = () => {
 
 					setArr([...arr]);
 				}
-				await sleep(200);
+				setAlgoName("bubbleSort");
+				await sleep(100);
 			}
 			setLastSortedIdx(arr.length - 1 - i);
-			await sleep(300);
+			await sleep(200);
 		}
 		setCurrentIdx(null);
-		setNextIdx(null);
+		setNextIdx(null); */
 	};
 
 	const generateSelectionSort = async () => {
@@ -70,6 +91,7 @@ const App = () => {
 			}
 			console.log("indexed in the selection sort", i);
 			setLastSortedIdx(i);
+			setAlgoName("selectionSort");
 			let temp = arr[i];
 			arr[i] = arr[lowest];
 			arr[lowest] = temp;
@@ -98,6 +120,7 @@ const App = () => {
 				nextIdx={nextIdx}
 				value={value}
 				lastSortedIdx={lastSortedIdx}
+				algoName={algoName}
 			/>
 		</div>
 	);
