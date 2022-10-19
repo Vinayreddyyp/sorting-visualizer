@@ -23,5 +23,5 @@ export const SortWrapper = styled.div`
 	flex-direction: row;
 	align-content: center;
 	justify-content: space-evenly;
-	width: 25%;
+	width: 40%;
 `;
