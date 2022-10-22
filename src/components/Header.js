@@ -5,7 +5,14 @@ import React from "react";
 import Slider from "@mui/material/Slider";
 
 const Header = (props) => {
-	const { valuetext, value, generateBubbleSort, generateSelectionSort } = props;
+	const {
+		valuetext,
+		value,
+		generateBubbleSort,
+		generateSelectionSort,
+		generateInsertionSort,
+		generateMergeSort,
+	} = props;
 	return (
 		<Container>
 			<Button>Generate New Array</Button>
@@ -27,9 +34,9 @@ const Header = (props) => {
 			<SortWrapper>
 				<Button onClick={generateBubbleSort}>Bubble Sort</Button>
 				<Button onClick={generateSelectionSort}>Selection Sort</Button>
-				<Button onClick={generateSelectionSort}>Insertion Sort</Button>
+				<Button onClick={generateInsertionSort}>Insertion Sort</Button>
 				<Button>Quick Sort</Button>
-				<Button>Merge Sort</Button>
+				<Button onClick={generateMergeSort}>Merge Sort</Button>
 				<Button>Radix Sort</Button>
 			</SortWrapper>
 		</Container>
