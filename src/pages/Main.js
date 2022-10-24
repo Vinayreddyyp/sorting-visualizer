@@ -48,8 +48,7 @@ const Step = styled.div`
 `;
 
 const Main = (props) => {
-	const [idx, setIdx] = useState();
-	const { data, currentIdx, nextIdx, value, lastSortedIdx } = props;
+	const { data, currentIdx, nextIdx, value, lastSortedIdx, algoName } = props;
 
 	const [sortedColor, setSortedColor] = useState("");
 	useEffect(() => {
@@ -62,7 +61,23 @@ const Main = (props) => {
 
 	const width = 70 / data.length;
 
-	const BarGenerator = data.map((size, i) => {
+	const barGenerator = data.map((size, i) => {
+		let color = false;
+		console.log("lastSortedIdx in  the map", lastSortedIdx);
+		if (i === lastSortedIdx && algoName === "selectionSort") {
+			color = true;
+			console.log("color in the map", color);
+		}
+		if (i >= lastSortedIdx && algoName === "bubbleSort") {
+			color = true;
+		}
+		if (i === lastSortedIdx && algoName === "insertionSort") {
+			color = true;
+		}
+		if (i === lastSortedIdx && algoName === "mergeSort") {
+			color = true;
+		}
+
 		return (
 			<Bar
 				height={`${size}px`}
@@ -71,7 +86,7 @@ const Main = (props) => {
 				active={currentIdx === i}
 				sortedColor={sortedColor}
 				style={
-					i === lastSortedIdx
+					color
 						? { backgroundColor: "green" }
 						: i === nextIdx
 						? { backgroundColor: "blue" }
@@ -82,10 +97,9 @@ const Main = (props) => {
 			</Bar>
 		);
 	});
-
 	return (
 		<Div>
-			<Container>{BarGenerator}</Container>
+			<Container>{barGenerator}</Container>
 			<Step>
 				<p style={{ color: "white" }}>Developed By Vinay Reddy</p>
 			</Step>
