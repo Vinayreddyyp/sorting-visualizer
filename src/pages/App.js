@@ -17,6 +17,7 @@ const App = () => {
 	const [lastSortedIdx, setLastSortedIdx] = useState();
 	const [algoName, setAlgoName] = useState("");
 	const [isSort, setIsSort] = useState(false);
+	console.log("currentIdx in app", currentIdx, nextIdx);
 
 	useEffect(() => {
 		updateList();
