@@ -7,7 +7,6 @@ import Main from "./Main";
 import QuickSort from "../algorithms/QuickSort";
 import { bubbleSort } from "../algorithms/BubbleSort";
 import { insertionSort } from "../algorithms/InsertionSort";
-//import { mergeSorts } from "../algorithms/MergeSorts";
 import { selectionSort } from "../algorithms/SelectionSort";
 import { sleep } from "../helpers/index";
 
@@ -18,9 +17,9 @@ const App = () => {
 	const [nextIdx, setNextIdx] = useState();
 	const [lastSortedIdx, setLastSortedIdx] = useState();
 	const [algoName, setAlgoName] = useState("");
+	const [timeAndSpaceComplexity, setTimeAndSpaceComplexity] = useState({});
 	const [isSort, setIsSort] = useState(false);
 	const [animations, setAnimations] = useState([]);
-	const [mergeSorting, setMergeSorting] = useState([]);
 
 	useEffect(() => {
 		updateList();
@@ -124,8 +123,8 @@ const App = () => {
 
 			await sleep(200);
 
-			bar1.backgroundColor = "#FF7F50";
-			bar2.backgroundColor = "#FF7F50";
+			bar1.backgroundColor = "turquoise";
+			bar2.backgroundColor = "turquoise";
 		}
 
 		while (i <= mid) {
@@ -140,8 +139,8 @@ const App = () => {
 
 			await sleep(200);
 
-			bar1.backgroundColor = "#FF7F50";
-			bar2.backgroundColor = "#FF7F50";
+			bar1.backgroundColor = "turquoise";
+			bar2.backgroundColor = "turquoise";
 
 			i++;
 			k++;
@@ -159,8 +158,8 @@ const App = () => {
 
 			await sleep(200);
 
-			bar1.backgroundColor = "#FF7F50";
-			bar2.backgroundColor = "#FF7F50";
+			bar1.backgroundColor = "turquoise";
+			bar2.backgroundColor = "turquoise";
 
 			j++;
 			k++;
@@ -173,14 +172,32 @@ const App = () => {
 	};
 	const generateBubbleSort = () => {
 		switchSorting("BubbleSort");
+		setAlgoName("bubbleSort");
+		setTimeAndSpaceComplexity({
+			name: "BubbleSort",
+			timeComplexity: "O(n ^ 2)",
+			spaceComplexity: " O(1)",
+		});
 	};
 
 	const generateSelectionSort = () => {
+		setAlgoName("selectionSort");
 		switchSorting("SelectionSort");
+		setTimeAndSpaceComplexity({
+			name: "SelectionSort",
+			timeComplexity: "O(n ^ 2)",
+			spaceComplexity: " O(1)",
+		});
 	};
 
 	const generateInsertionSort = () => {
+		setAlgoName("InsertinSort");
 		switchSorting("InsertionSort");
+		setTimeAndSpaceComplexity({
+			name: "InsertionSort",
+			timeComplexity: "O(n)",
+			spaceComplexity: " O(1)",
+		});
 	};
 	const generateMergeSort = () => {
 		setAlgoName("mergeSort");
@@ -214,6 +231,7 @@ const App = () => {
 				animations={animations}
 				setCurrentIdx={setCurrentIdx}
 				setNextIdx={setNextIdx}
+				timeAndSpaceComplexity={timeAndSpaceComplexity}
 			/>
 
 			{isSort && algoName === "quickSort" && (
