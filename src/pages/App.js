@@ -4,10 +4,12 @@ import React, { useEffect, useState } from "react";
 
 import Header from "../components/Header";
 import Main from "./Main";
-import MergeSort from "../algorithms/MergeSort";
+import QuickSort from "../algorithms/QuickSort";
 import { bubbleSort } from "../algorithms/BubbleSort";
 import { insertionSort } from "../algorithms/InsertionSort";
+//import { mergeSorts } from "../algorithms/MergeSorts";
 import { selectionSort } from "../algorithms/SelectionSort";
+import { sleep } from "../helpers/index";
 
 const App = () => {
 	const [value, setValue] = useState("");
@@ -17,12 +19,14 @@ const App = () => {
 	const [lastSortedIdx, setLastSortedIdx] = useState();
 	const [algoName, setAlgoName] = useState("");
 	const [isSort, setIsSort] = useState(false);
-	console.log("currentIdx in app", currentIdx, nextIdx);
+	const [animations, setAnimations] = useState([]);
+	const [mergeSorting, setMergeSorting] = useState([]);
 
 	useEffect(() => {
 		updateList();
+		console.log("updateList", arr);
 		setCurrentIdx();
-	}, [value, isSort]);
+	}, [value]);
 
 	const updateList = () => {
 		const randomArr = Array.from({ length: value }, () =>
@@ -39,7 +43,6 @@ const App = () => {
 	};
 
 	const switchSorting = (type) => {
-		console.log("type in the switchSorting", type);
 		switch (type) {
 			case "BubbleSort":
 				return bubbleSort(
@@ -69,11 +72,105 @@ const App = () => {
 					arr
 				);
 
+			case "MergeSort":
+				return mergeSorts();
+
 			default:
 				return null;
 		}
 	};
 
+	const mergeSorts = async () => {
+		let currentArr = arr;
+
+		await sort(currentArr, 0, currentArr.length - 1);
+	};
+
+	const sort = async (currentArr, low, high) => {
+		console.log("low and high", low, high);
+
+		if (low < high) {
+			let mid = Math.floor((low + high) / 2);
+			await sort(currentArr, low, mid);
+			await sort(currentArr, mid + 1, high);
+			await merge(currentArr, low, mid, high);
+		}
+	};
+
+	const merge = async (currentArr, low, mid, high) => {
+		debugger;
+		let i = low;
+		let j = mid + 1;
+		let k = 0;
+		let tempArr = [];
+
+		while (i <= mid && j <= high) {
+			debugger;
+			if (arr[i] < arr[j]) {
+				tempArr[k] = currentArr[i];
+				i++;
+				k++;
+			} else {
+				tempArr[k] = currentArr[j];
+				j++;
+				k++;
+			}
+			setArr([...arr, tempArr]);
+			let bar1 = document.getElementById(i).style;
+			let bar2 = document.getElementById(j).style;
+
+			bar1.backgroundColor = "#DC143C";
+			bar2.backgroundColor = "#6A5ACD";
+
+			await sleep(200);
+
+			bar1.backgroundColor = "#FF7F50";
+			bar2.backgroundColor = "#FF7F50";
+		}
+
+		while (i <= mid) {
+			tempArr[k] = currentArr[i];
+
+			setArr([...arr, tempArr]);
+
+			let bar1 = document.getElementById(i).style;
+			let bar2 = document.getElementById(j).style;
+			bar1.backgroundColor = "#DC143C";
+			bar2.backgroundColor = "#6A5ACD";
+
+			await sleep(200);
+
+			bar1.backgroundColor = "#FF7F50";
+			bar2.backgroundColor = "#FF7F50";
+
+			i++;
+			k++;
+		}
+
+		while (j <= high) {
+			tempArr[k] = currentArr[j];
+
+			setArr([...arr, tempArr]);
+
+			let bar1 = document.getElementById(i).style;
+			let bar2 = document.getElementById(j).style;
+			bar1.backgroundColor = "#DC143C";
+			bar2.backgroundColor = "#6A5ACD";
+
+			await sleep(200);
+
+			bar1.backgroundColor = "#FF7F50";
+			bar2.backgroundColor = "#FF7F50";
+
+			j++;
+			k++;
+		}
+
+		for (let i = low; i <= high; i++) {
+			currentArr[i] = tempArr[i - low];
+			setArr([...arr, currentArr]);
+		}
+	};
 	const generateBubbleSort = () => {
 		switchSorting("BubbleSort");
 	};
@@ -88,7 +185,11 @@ const App = () => {
 	const generateMergeSort = () => {
 		setAlgoName("mergeSort");
 		setIsSort(true);
-		switchSorting("mergeSort");
+		switchSorting("MergeSort");
+	};
+	const generateQuickSort = () => {
+		setAlgoName("quickSort");
+		setIsSort(true);
 	};
 
 	return (
@@ -100,6 +201,7 @@ const App = () => {
 				generateSelectionSort={generateSelectionSort}
 				generateInsertionSort={generateInsertionSort}
 				generateMergeSort={generateMergeSort}
+				generateQuickSort={generateQuickSort}
 			/>
 
 			<Main
@@ -109,9 +211,13 @@ const App = () => {
 				value={value}
 				lastSortedIdx={lastSortedIdx}
 				algoName={algoName}
+				animations={animations}
+				setCurrentIdx={setCurrentIdx}
+				setNextIdx={setNextIdx}
 			/>
-			{isSort && (
-				<MergeSort
+
+			{isSort && algoName === "quickSort" && (
+				<QuickSort
 					arr={arr}
 					isSort={isSort}
 					setArr={setArr}
