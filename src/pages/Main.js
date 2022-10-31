@@ -6,7 +6,7 @@ import styled from "styled-components";
 const Bar = styled.div`
 	display: flex;
 	align-content: center;
-	width: 3%;
+	width: 1%;
 	height: ${(props) => props.height};
 	background-color: ${(props) =>
 		props.active ? "#B50002" : props.sortedColor};
@@ -16,10 +16,10 @@ const Bar = styled.div`
 
 const Container = styled.div`
 	position: absolute;
-	bottom: 30%;
+	bottom: 17%;
 	display: flex;
 	flex-direction: row;
-	width: 80%;
+	width: 57%;
 	height: 43%;
 	padding-left: 25px;
 	padding-right: 25px;
@@ -36,8 +36,8 @@ const Div = styled.div`
 
 const Step = styled.div`
 	align-items: flex-end;
-	background-color: black;
-	bottom: 0;
+	background-color: chocolate;
+	bottom: 0%;
 	display: flex;
 	height: 50px;
 	justify-content: center;
@@ -47,7 +47,15 @@ const Step = styled.div`
 `;
 
 const Main = (props) => {
-	const { data, currentIdx, nextIdx, value, lastSortedIdx, algoName } = props;
+	const {
+		data,
+		currentIdx,
+		nextIdx,
+		value,
+		lastSortedIdx,
+		algoName,
+		timeAndSpaceComplexity,
+	} = props;
 
 	const [sortedColor, setSortedColor] = useState("");
 
@@ -55,7 +63,7 @@ const Main = (props) => {
 		if (currentIdx === null) {
 			setSortedColor("#006400");
 		} else {
-			setSortedColor("black");
+			setSortedColor("#ff7f50");
 		}
 	}, [currentIdx]);
 
@@ -66,15 +74,11 @@ const Main = (props) => {
 		console.log("lastSortedIdx in  the map", lastSortedIdx);
 		if (i === lastSortedIdx && algoName === "selectionSort") {
 			color = true;
-			console.log("color in the map", color);
 		}
 		if (i >= lastSortedIdx && algoName === "bubbleSort") {
 			color = true;
 		}
 		if (i === lastSortedIdx && algoName === "insertionSort") {
-			color = true;
-		}
-		if (i === lastSortedIdx && algoName === "mergeSort") {
 			color = true;
 		}
 
@@ -98,9 +102,20 @@ const Main = (props) => {
 	});
 	return (
 		<Div>
+			{algoName && (
+				<div className="timeandspace">
+					<div className="name">Algorithm: {timeAndSpaceComplexity.name}</div>
+					<div className="tcomplexity">
+						Time Complexity: {timeAndSpaceComplexity.timeComplexity}
+					</div>
+					<div className="scomplexity">
+						Space Complexity: {timeAndSpaceComplexity.spaceComplexity}
+					</div>
+				</div>
+			)}
 			<Container>{barGenerator}</Container>
 			<Step>
-				<p style={{ color: "white" }}>Developed By Vinay Reddy</p>
+				<p style={{ color: "black" }}>Developed By Vinay Reddy</p>
 			</Step>
 		</Div>
 	);
