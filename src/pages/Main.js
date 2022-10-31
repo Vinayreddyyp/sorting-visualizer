@@ -7,7 +7,6 @@ const Bar = styled.div`
 	display: flex;
 	align-content: center;
 	width: 3%;
-
 	height: ${(props) => props.height};
 	background-color: ${(props) =>
 		props.active ? "#B50002" : props.sortedColor};
@@ -51,6 +50,7 @@ const Main = (props) => {
 	const { data, currentIdx, nextIdx, value, lastSortedIdx, algoName } = props;
 
 	const [sortedColor, setSortedColor] = useState("");
+
 	useEffect(() => {
 		if (currentIdx === null) {
 			setSortedColor("#006400");
@@ -80,6 +80,7 @@ const Main = (props) => {
 
 		return (
 			<Bar
+				id={i}
 				height={`${size}px`}
 				width={`${width}px`}
 				key={i}
@@ -92,9 +93,7 @@ const Main = (props) => {
 						? { backgroundColor: "blue" }
 						: null
 				}
-			>
-				<span style={{ color: "white" }}>{size}</span>
-			</Bar>
+			/>
 		);
 	});
 	return (
