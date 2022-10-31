@@ -26,6 +26,9 @@ const Container = styled.div`
 	justify-content: center;
 	align-items: flex-end;
 	border: 4px solid black;
+	@media only screen and (min-width: 1440px) {
+		bottom: 23%;
+	}
 `;
 
 const Div = styled.div`
