@@ -1,0 +1,13 @@
+.sortingBars {
+	position: absolute;
+	top: 25%;
+	left: 5%;
+}
+
+.bars {
+	display: flex;
+	align-content: center;
+	width: 3%;
+	margin-right: 2px;
+	background-color: #ff7f50;
+}
