@@ -6,7 +6,7 @@ import styled from "styled-components";
 const Bar = styled.div`
 	display: flex;
 	align-content: center;
-	width: 1%;
+	width: 1.8%;
 	height: ${(props) => props.height};
 	background-color: ${(props) =>
 		props.active ? "#B50002" : props.sortedColor};
