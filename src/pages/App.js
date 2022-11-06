@@ -50,6 +50,7 @@ const App = () => {
 					setAlgoName,
 					setNextIdx,
 					setLastSortedIdx,
+
 					arr
 				);
 			case "SelectionSort":
