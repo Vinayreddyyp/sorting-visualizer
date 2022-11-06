@@ -7,13 +7,13 @@ export const Container = styled.div`
 	justify-content: space-evenly;
 	height: 50px;
 	width: 100%;
-	background-color: black;
+	background-color: #3cb371;
 	padding-left: 25px;
 	padding-right: 25px;
 `;
 
 export const Button = styled.p`
-	color: #fff;
+	color: black;
 	cursor: pointer;
 	text-align: center;
 `;
